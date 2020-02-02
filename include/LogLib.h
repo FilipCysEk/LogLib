@@ -101,6 +101,12 @@ public:
     void setOverSizeFileBehaviour(bool override);
 
     /**
+     * @brief Setting behaviour when run app. Adding to old file new lines or createnew empty file.
+     * @param additiveToOldLog 0 - creating new file; 1 - adding new lines to old file
+     */
+    void setNewLogBehaviour(bool additiveToOldLog = 0);
+
+    /**
      * @brief Setting flag to write date on begin every line
      * @param showDate true - show date; flase - no date
      */

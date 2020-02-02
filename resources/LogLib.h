@@ -1,11 +1,109 @@
+#ifndef DOWNLOADLIBLARY_LOGLIB_H
+#define DOWNLOADLIBLARY_LOGLIB_H
+
 #include <iostream>
 #include <string>
+#include <experimental/filesystem>
+#include <fstream>
 
 using namespace std;
+namespace fs = experimental::filesystem;
+
+class LogLibFiles{
+private:
+    fs::path logDirPath = "";
+    string fileName = "";
+    string fileExtension = "";
+    size_t maxFileSize = 1024 * 1024;
+    bool overrideToBigFile = false;
+    bool additiveOldFile = false;
+    unsigned short maxLogFiles = 0;
+    ofstream logFileStream;
+
+    string getFileNameWithExtension();
+    string getPathAndName();
+    bool createCopyOldLogFiles();
+
+    /**
+     * @brief Checking and trying reopen file if is closed
+     * @return
+     */
+    bool checkFileOpen();
+
+public:
+    LogLibFiles();
+    ~LogLibFiles();
+
+    /**
+     * @brief Setting max allowed size of log file
+     * @param maxFileSize size of file in Bytes
+     */
+    void setMaxFileSize(size_t maxFileSize);
+
+    /**
+     * @brief Setting behaviour when run app. Adding to old file new lines or createnew empty file.
+     * @param additiveOldFiles 0 - creating new file; 1 - adding new lines to old file
+     */
+    void setAdditiveOldFiles(bool additiveOldFiles);
+
+    /**
+     * @brief Setting path to dir, where log is keeped
+     * @param logDirPath path to dir for logs absolute or relatives
+     */
+    void setLogDirPath(string logDirPath);
+
+    /**
+     * @brief Setting log file name
+     * @param fileName name of log file
+     */
+    void setLogFileName(const string fileName);
+
+    /**
+     * @brief Creating copies of old log files and delete last if is too much
+     * @param maxOfCopies number of copies
+     */
+    void setAmountOldLogFiles(unsigned short maxOfCopies);
+
+    /**
+     * @brief Setting behaviour when file is too big.
+     * @param override true - is removing begin of file; false - creating new file (previous is name like old files)
+     */
+    void setOverSizeFileBehaviour(bool override);
+
+    /**
+     * @brief Initialize and prepare vars (like open fstream).
+     */
+    void initLogging();
+
+    /**
+     * @brief write text to file
+     * @param text text to write in file
+     */
+    void writeLine(string text);
+};
 
 
 class LogLib {
+private:
+    LogLibFiles lFiles;
+    unsigned int level = 3;
+    /*
+    * 0 - no loging
+    * 1 - only errors
+    * 2 - log important things with start and shutdown
+    * 3 - loging all
+    */
+
+    time_t actTime;
+    struct tm actTimeStr;
+
+    void addNewLine(string);
+    bool blockedSetting = false;
+    bool showDate = true;
+    bool l1ToConsole = false, l2ToConsole = false, l3ToConsole = false;
 public:
+    static const unsigned short NO_LOGING = 0, LOG_ERRORS = 1, LOG_WARNINGS = 2, LOG_ALL = 3;
+
     LogLib();
 
     /**
@@ -71,6 +169,12 @@ public:
      * @param override true - is removing begin of file; false - creating new file (previous is name like old files)
      */
     void setOverSizeFileBehaviour(bool override);
+
+    /**
+     * @brief Setting behaviour when run app. Adding to old file new lines or createnew empty file.
+     * @param additiveToOldLog 0 - creating new file; 1 - adding new lines to old file
+     */
+    void setNewLogBehaviour(bool additiveToOldLog = 0);
 
     /**
      * @brief Setting flag to write date on begin every line

@@ -104,3 +104,7 @@ void LogLib::setAllLogToConsole(bool log) {
     l2ToConsole = log;
     l3ToConsole = log;
 }
+
+void LogLib::setNewLogBehaviour(bool additiveToOldLog) {
+    if (!blockedSetting) lFiles.setAdditiveOldFiles(additiveToOldLog);
+}

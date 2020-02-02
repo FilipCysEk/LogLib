@@ -20,6 +20,7 @@ private:
     string fileExtension = "";
     size_t maxFileSize = 1024 * 1024;
     bool overrideToBigFile = false;
+    bool additiveOldFile = false;
     unsigned short maxLogFiles = 0;
     ofstream logFileStream;
 
@@ -42,6 +43,12 @@ public:
      * @param maxFileSize size of file in Bytes
      */
     void setMaxFileSize(size_t maxFileSize);
+
+    /**
+     * @brief Setting behaviour when run app. Adding to old file new lines or createnew empty file.
+     * @param additiveOldFiles 0 - creating new file; 1 - adding new lines to old file
+     */
+    void setAdditiveOldFiles(bool additiveOldFiles);
 
     /**
      * @brief Setting path to dir, where log is keeped

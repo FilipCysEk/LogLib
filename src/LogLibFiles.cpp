@@ -53,6 +53,10 @@ void LogLibFiles::setLogFileName(const string fileName){
                 this->fileName = fileName[i] + this->fileName;
             }
         }
+        if(extension){
+            this->fileName = fileExtension;
+            fileExtension = "";
+        }
     } else {
         throw "Unexcepted \\ or / in filename";
     }
@@ -161,6 +165,9 @@ void LogLibFiles::initLogging(){
         throw "Not setted filename or path";
 
     } else {
+        if(additiveOldFile){
+            logFileStream.open(this->getPathAndName(), fstream::out | fstream::app);
+        } else
         if(this->createCopyOldLogFiles()) {
             logFileStream.open(this->getPathAndName(), fstream::out);
         }
@@ -184,4 +191,8 @@ void LogLibFiles::writeLine(string text){
 
 LogLibFiles::~LogLibFiles() {
     logFileStream.close();
+}
+
+void LogLibFiles::setAdditiveOldFiles(bool additiveOldFiles) {
+    additiveOldFile = additiveOldFiles;
 }
