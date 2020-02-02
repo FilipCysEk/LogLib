@@ -32,6 +32,8 @@ private:
     bool showDate = true;
     bool l1ToConsole = false, l2ToConsole = false, l3ToConsole = false;
 public:
+    static const unsigned short NO_LOGING = 0, LOG_ERRORS = 1, LOG_WARNINGS = 2, LOG_ALL = 3;
+
     LogLib();
 
     /**
