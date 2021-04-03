@@ -162,7 +162,7 @@ void LogLibFiles::setOverSizeFileBehaviour(bool override){
 void LogLibFiles::initLogging(){
     if(fileName == "" || logDirPath == ""){
         cout <<"Throwing";
-        throw "Not setted filename or path";
+        throw "Not set filename or path";
 
     } else {
         if(additiveOldFile){

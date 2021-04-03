@@ -46,21 +46,21 @@ public:
     /**
      * @brief Add new line to log file.
      * @brief Information on level 1 (errors).
-     * @param text Text to add
+     * @param text Text to addTask
      */
     void addNewLineL1(string);
 
     /**
      * @brief Add new line to log file.
      * @brief Information on level 2 (important things)
-     * @param text Text to add
+     * @param text Text to addTask
      */
     void addNewLineL2(string);
 
     /**
      * @brief Add new line to log file.
      * @brief Information on level 3 (everything else than on level 1 and 2)
-     * @param text Text to add
+     * @param text Text to addTask
      */
     void addNewLineL3(string);
 
